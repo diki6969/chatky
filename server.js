@@ -4,12 +4,10 @@ import { Configuration, OpenAIApi } from "openai"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
+import fetch from "node-fetch"
 
 dotenv.config()
 
-const openAiConfig = new Configuration({ apiKey: process.env.OPEN_AI_KEY })
-
-const openAi = new OpenAIApi(openAiConfig)
 
 const app = express()
 
@@ -25,6 +23,15 @@ app.get("/", (req, res) => {
 
 app.post("/api", async (req, res) => {
 	const clientMessage = req.body
+	
+	const cek = await fetch('https://apikey.diki6969.repl.co/')
+	const dapat = await cek.json()
+	const hasil = dapat.key
+	const openAiConfig = new Configuration({ apiKey: hasil })
+
+
+
+const openAi = new OpenAIApi(openAiConfig)
 
 	const chatCompletion = await openAi.createChatCompletion({
 		model: "gpt-3.5-turbo",
